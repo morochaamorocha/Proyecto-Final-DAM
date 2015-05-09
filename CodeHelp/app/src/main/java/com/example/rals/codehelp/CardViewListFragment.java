@@ -44,7 +44,7 @@ public class CardViewListFragment extends Fragment {
 
         datos = new ArrayList<>();
 
-        //TODO: Extraer datos de Firebase según la posicion
+        //TODO: Extraer cardview de Firebase según la posicion
         switch (getArguments().getInt("position")){
             case 0:
 
@@ -61,10 +61,10 @@ public class CardViewListFragment extends Fragment {
 //        Usuario u2 = new Usuario("test2", "test2", "", "", "", "", "");
 //        Usuario u3 = new Usuario("test3", "test3", "", "", "", "", "");
 //
-//        datos = new ArrayList<>();
-//        datos.add(u1);
-//        datos.add(u2);
-//        datos.add(u3);
+//        cardview = new ArrayList<>();
+//        cardview.add(u1);
+//        cardview.add(u2);
+//        cardview.add(u3);
 
 
     }
@@ -137,7 +137,7 @@ public class CardViewListFragment extends Fragment {
 
         @Override
         public Holder onCreateViewHolder(ViewGroup parent, int viewType) {
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.datos, parent, false);
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.cardview, parent, false);
 
             view.setOnClickListener(this);
             Holder holder = new Holder(view);

@@ -49,14 +49,14 @@ public class PerfilFragment extends Fragment implements View.OnClickListener {
 
         provider = Const.gAuthData.getProvider();
 
-        //Obtenemos los datos de Firebase
+        //Obtenemos los cardview de Firebase
         Firebase mUserRef = Const.ref.child("users").child(Const.gAuthData.getUid());
         mUserRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 datos = (Map<String, Object>) dataSnapshot.getValue();
 
-                //Asignamos los datos a los controles
+                //Asignamos los cardview a los controles
                 if (datos != null) {
                     txtNombre.setText(datos.get("nombre").toString());
                     txtApellido.setText(datos.get("apellido").toString());
@@ -70,7 +70,7 @@ public class PerfilFragment extends Fragment implements View.OnClickListener {
 
             @Override
             public void onCancelled(FirebaseError firebaseError) {
-                Toast.makeText(getActivity().getApplicationContext(), "Ha ocurrido un error al recuperar los datos.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity().getApplicationContext(), "Ha ocurrido un error al recuperar los cardview.", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -113,7 +113,7 @@ public class PerfilFragment extends Fragment implements View.OnClickListener {
         switch (v.getId()){
             case R.id.btnRegistrarse:
 
-                //Actualizar los datos en firebase
+                //Actualizar los cardview en firebase
                 if (provider.equals("password")){
                     if (!txtPassAct.getText().toString().trim().equals("")){
 
@@ -152,7 +152,7 @@ public class PerfilFragment extends Fragment implements View.OnClickListener {
 
         Map<String, Object> m1 = new HashMap<>();
 
-        //Actualizamos los datos...
+        //Actualizamos los cardview...
         mUserRef = Const.ref.child("users").child(Const.gAuthData.getUid());
         m1.put("nombre", txtNombre.getText().toString());
         m1.put("apellido", txtApellido.getText().toString());
@@ -164,7 +164,7 @@ public class PerfilFragment extends Fragment implements View.OnClickListener {
         mUserRef.updateChildren(m1, new Firebase.CompletionListener() {
             @Override
             public void onComplete(FirebaseError firebaseError, Firebase firebase) {
-                Toast.makeText(getActivity().getApplication(), "Los datos han sido actualizados", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity().getApplication(), "Los cardview han sido actualizados", Toast.LENGTH_SHORT).show();
             }
         });
     }
