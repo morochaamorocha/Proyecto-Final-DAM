@@ -1,5 +1,6 @@
 package com.example.rals.codehelp;
 
+import com.firebase.client.AuthData;
 import com.firebase.client.Firebase;
 
 /**
@@ -8,4 +9,5 @@ import com.firebase.client.Firebase;
 public class Const {
 
     public static final Firebase ref = new Firebase("https://codehelp.firebaseio.com/");
+    public static AuthData gAuthData;
 }
