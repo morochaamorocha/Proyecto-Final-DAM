@@ -9,32 +9,32 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.rals.codehelp.model.Usuario;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 
-public class ExpertosFragment extends Fragment {
+public class CardViewListFragment extends Fragment {
 
     private RecyclerView recyclerView;
     private List<Object> datos;
+    private ExpertosAdapter adapter;
 
 
-    public static ExpertosFragment newInstance(int position) {
-        ExpertosFragment fragment = new ExpertosFragment();
+    public static CardViewListFragment newInstance(int position) {
+        CardViewListFragment fragment = new CardViewListFragment();
         Bundle args = new Bundle();
         args.putInt("position", position);
         fragment.setArguments(args);
         return fragment;
     }
 
-    public ExpertosFragment() {
+    public CardViewListFragment() {
         // Required empty public constructor
     }
 
@@ -42,42 +42,75 @@ public class ExpertosFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        datos = new ArrayList<>();
 
         //TODO: Extraer datos de Firebase según la posicion
+        switch (getArguments().getInt("position")){
+            case 0:
 
-        Usuario u1 = new Usuario("test1", "test1", "", "", "", "", "");
-        Usuario u2 = new Usuario("test2", "test2", "", "", "", "", "");
-        Usuario u3 = new Usuario("test3", "test3", "", "", "", "", "");
+                break;
+            case 2:
 
-        datos = new ArrayList<>();
-        datos.add(u1);
-        datos.add(u2);
-        datos.add(u3);
+                break;
+            case 3:
+
+                break;
+        }
+
+//        Usuario u1 = new Usuario("test1", "test1", "", "", "", "", "");
+//        Usuario u2 = new Usuario("test2", "test2", "", "", "", "", "");
+//        Usuario u3 = new Usuario("test3", "test3", "", "", "", "", "");
+//
+//        datos = new ArrayList<>();
+//        datos.add(u1);
+//        datos.add(u2);
+//        datos.add(u3);
+
 
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.mis_expertos, container, false);
 
-        recyclerView = (RecyclerView)view.findViewById(R.id.RecView);
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
+        View view = inflater.inflate(R.layout.cardview_list, container, false);
 
-        ExpertosAdapter adapter = new ExpertosAdapter(datos);
-        adapter.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //TODO: Iniciar actividad de detalle del experto
-            }
-        });
+        if (!datos.isEmpty()){
 
-        recyclerView.setAdapter(adapter);
+            recyclerView = (RecyclerView)view.findViewById(R.id.RecView);
+            recyclerView.setHasFixedSize(true);
+            recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
 
-        recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST));
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
+            adapter = new ExpertosAdapter(datos);
+            adapter.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    //TODO: Iniciar actividad de detalle del experto/solicitud
+                }
+            });
 
+            recyclerView.setAdapter(adapter);
+
+            recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST));
+            recyclerView.setItemAnimator(new DefaultItemAnimator());
+            recyclerView.setVisibility(View.VISIBLE);
+
+
+        }else {
+
+            TextView lblEmptyList = (TextView)view.findViewById(R.id.lblEmptyText);
+            lblEmptyList.setVisibility(View.VISIBLE);
+
+            Button btnIniciarSolicitud = (Button)view.findViewById(R.id.btnIniciarSolicitud);
+            btnIniciarSolicitud.setVisibility(View.VISIBLE);
+            btnIniciarSolicitud.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    //TODO: Iniciar nueva solicitud
+                }
+            });
+
+        }
         return view;
     }
 
