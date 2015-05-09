@@ -47,13 +47,13 @@ public class CardViewListFragment extends Fragment {
         //TODO: Extraer cardview de Firebase según la posicion
         switch (getArguments().getInt("position")){
             case 0:
-
+                //Mostrar solicitudes activas
                 break;
             case 2:
-
+                //Mostrar historial expertos
                 break;
             case 3:
-
+                //Mostrar historial solicitudes
                 break;
         }
 
