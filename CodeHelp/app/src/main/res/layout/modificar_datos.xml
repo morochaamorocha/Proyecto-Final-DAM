@@ -105,7 +105,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/txtPassAct"
-                    android:hint="Contraseña Actual" />
+                    android:hint="Contraseña Actual"
+                    android:inputType="textPassword" />
 
                 <EditText
                     android:layout_width="match_parent"

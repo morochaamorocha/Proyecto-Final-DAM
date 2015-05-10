@@ -58,14 +58,14 @@ public class CardViewListFragment extends Fragment {
                 break;
         }
 
-//        Usuario u1 = new Usuario("test1", "test1", "", "", "", "", "");
-//        Usuario u2 = new Usuario("test2", "test2", "", "", "", "", "");
-//        Usuario u3 = new Usuario("test3", "test3", "", "", "", "", "");
-//
-//        cardview = new ArrayList<>();
-//        cardview.add(u1);
-//        cardview.add(u2);
-//        cardview.add(u3);
+        Usuario u1 = new Usuario("test1", "test1", "", "", "", "", "");
+        Usuario u2 = new Usuario("test2", "test2", "", "", "", "", "");
+        Usuario u3 = new Usuario("test3", "test3", "", "", "", "", "");
+
+        datos = new ArrayList<>();
+        datos.add(u1);
+        datos.add(u2);
+        datos.add(u3);
 
 
     }
@@ -86,7 +86,8 @@ public class CardViewListFragment extends Fragment {
             adapter.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    //TODO: Iniciar actividad de detalle del experto/solicitud
+                    //Iniciar actividad de detalle del experto/solicitud
+                    startActivity(new Intent(getActivity().getApplicationContext(), DetalleActivity.class));
                 }
             });
 
