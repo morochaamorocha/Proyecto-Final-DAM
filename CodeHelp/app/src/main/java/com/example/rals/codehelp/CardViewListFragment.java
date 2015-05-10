@@ -1,6 +1,7 @@
 package com.example.rals.codehelp;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -44,7 +45,7 @@ public class CardViewListFragment extends Fragment {
 
         datos = new ArrayList<>();
 
-        //TODO: Extraer cardview de Firebase según la posicion
+        //TODO: Extraer datos de Firebase según la posicion
         switch (getArguments().getInt("position")){
             case 0:
                 //Mostrar solicitudes activas
@@ -106,7 +107,8 @@ public class CardViewListFragment extends Fragment {
             btnIniciarSolicitud.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    //TODO: Iniciar nueva solicitud
+                    //Iniciar nueva solicitud
+                    startActivity(new Intent(getActivity().getApplicationContext(), IniciarSolicitudActivity.class));
                 }
             });
 
