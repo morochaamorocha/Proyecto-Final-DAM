@@ -1,20 +1,30 @@
 package com.example.rals.codehelp;
 
 import android.app.Activity;
-import android.support.v7.app.ActionBarActivity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
+
+import com.example.rals.codehelp.model.Solicitud;
+import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
 
 
 public class IniciarSolicitudActivity extends Activity implements AdapterView.OnItemSelectedListener{
 
-    //TODO: Implementar clase
     private Spinner spinner;
+    private Firebase mSolicitudesRef, nuevaSolicitudRef;
+    private String categoria;
+    private EditText txtTitulo, txtDescripcion;
+    private Button btnIniciarSolic;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +37,48 @@ public class IniciarSolicitudActivity extends Activity implements AdapterView.On
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         spinner.setAdapter(adapter);
+        spinner.setOnItemSelectedListener(this);
+
+        txtTitulo = (EditText)findViewById(R.id.txtTitulo);
+
+        txtDescripcion = (EditText)findViewById(R.id.txtDescripcion);
+
+        btnIniciarSolic = (Button)findViewById(R.id.btnIniciarSolicitud);
+        btnIniciarSolic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                //Iniciar una nueva solicitud...
+                mSolicitudesRef = Const.ref.child("solicitudes");
+                nuevaSolicitudRef = mSolicitudesRef.push();
+
+                Solicitud solicitud = new Solicitud();
+                solicitud.setTitulo(txtTitulo.getText().toString());
+                solicitud.setDescripcion(txtDescripcion.getText().toString());
+                solicitud.setCategoria(categoria);
+                solicitud.setIdCliente(Const.gAuthData.getUid());
+                solicitud.setAbierta(true);
+
+                nuevaSolicitudRef.setValue(solicitud, new Firebase.CompletionListener() {
+                    @Override
+                    public void onComplete(FirebaseError firebaseError, Firebase firebase) {
+
+                        //Iniciamos servicio...
+                        PrecenseService.iniciarServicio(getApplicationContext(), nuevaSolicitudRef.getKey());
+
+                        Toast.makeText(getApplicationContext(), "Solicitud creada. Buscando un Experto", Toast.LENGTH_SHORT).show();
+                        finish();
+
+                    }
+                });
+
+
+
+
+            }
+        });
+
+
 
     }
 
@@ -54,7 +106,7 @@ public class IniciarSolicitudActivity extends Activity implements AdapterView.On
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
+        categoria = parent.getItemAtPosition(position).toString();
     }
 
     @Override

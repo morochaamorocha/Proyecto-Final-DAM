@@ -15,9 +15,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.rals.codehelp.model.Usuario;
+import com.firebase.client.Firebase;
+import com.firebase.client.Query;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 
 public class CardViewListFragment extends Fragment {
@@ -25,6 +28,7 @@ public class CardViewListFragment extends Fragment {
     private RecyclerView recyclerView;
     private List<Object> datos;
     private ExpertosAdapter adapter;
+    private int pos;
 
 
     public static CardViewListFragment newInstance(int position) {
@@ -45,27 +49,35 @@ public class CardViewListFragment extends Fragment {
 
         datos = new ArrayList<>();
 
+        Firebase mRef = Const.ref.child("solicitudes");
+
+
         //TODO: Extraer datos de Firebase según la posicion
-        switch (getArguments().getInt("position")){
+        switch (pos = getArguments().getInt("position")){
             case 0:
-                //Mostrar solicitudes activas
+                //Mostrar solicitudes activas hechas por el usuario
+                Query query = mRef.orderByChild("idCliente").equalTo(Const.gAuthData.getUid());
+
+
+
                 break;
             case 2:
                 //Mostrar historial expertos
+                Usuario u1 = new Usuario("test1", "test1", "", "", "", "");
+                Usuario u2 = new Usuario("test2", "test2", "", "", "", "");
+                Usuario u3 = new Usuario("test3", "test3", "", "", "", "");
+
+                datos = new ArrayList<>();
+                datos.add(u1);
+                datos.add(u2);
+                datos.add(u3);
                 break;
             case 3:
                 //Mostrar historial solicitudes
                 break;
         }
 
-        Usuario u1 = new Usuario("test1", "test1", "", "", "", "", "");
-        Usuario u2 = new Usuario("test2", "test2", "", "", "", "", "");
-        Usuario u3 = new Usuario("test3", "test3", "", "", "", "", "");
 
-        datos = new ArrayList<>();
-        datos.add(u1);
-        datos.add(u2);
-        datos.add(u3);
 
 
     }
@@ -103,17 +115,17 @@ public class CardViewListFragment extends Fragment {
             TextView lblEmptyList = (TextView)view.findViewById(R.id.lblEmptyText);
             lblEmptyList.setVisibility(View.VISIBLE);
 
-            Button btnIniciarSolicitud = (Button)view.findViewById(R.id.btnIniciarSolicitud);
-            btnIniciarSolicitud.setVisibility(View.VISIBLE);
-            btnIniciarSolicitud.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    //Iniciar nueva solicitud
-                    startActivity(new Intent(getActivity().getApplicationContext(), IniciarSolicitudActivity.class));
-                }
-            });
-
         }
+
+        Button btnIniciarSolicitud = (Button)view.findViewById(R.id.btnIniciarSolicitud);
+        btnIniciarSolicitud.setVisibility(View.VISIBLE);
+        btnIniciarSolicitud.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Iniciar nueva solicitud
+                startActivity(new Intent(getActivity().getApplicationContext(), IniciarSolicitudActivity.class));
+            }
+        });
         return view;
     }
 
@@ -151,7 +163,14 @@ public class CardViewListFragment extends Fragment {
         @Override
         public void onBindViewHolder(Holder holder, int position) {
             Usuario u = (Usuario)m.get(position);
-            holder.asignarDatos(u.getNombre() + " " + u.getApellido(), R.id.useLogo);
+            int img;
+
+            if (pos == 2){
+                img = R.drawable.user_icon;
+            }else{
+                img = R.drawable.javaimage;
+            }
+            holder.asignarDatos(u.getNombre() + " " + u.getApellido(), img);
         }
 
         @Override

@@ -91,14 +91,14 @@ public class MainActivity extends Activity
                 break;
         }
 
-
+        onSectionAttached(position);
 
     }
 
     public void onSectionAttached(int number) {
         switch (number) {
             case 0:
-                mTitle = "Solicitar un Experto";
+                mTitle = "Soliciudes Activas";
                 break;
             case 1:
                 mTitle = "Perfil y Facturacion";
