@@ -51,29 +51,30 @@ public class CardViewListFragment extends Fragment {
 
         Firebase mRef = Const.ref.child("solicitudes");
 
+        //Mostrar historial expertos
+        Usuario u1 = new Usuario("test1", "test1", "", "", "", "");
+        Usuario u2 = new Usuario("test2", "test2", "", "", "", "");
+        Usuario u3 = new Usuario("test3", "test3", "", "", "", "");
+
+        datos = new ArrayList<>();
 
         //TODO: Extraer datos de Firebase según la posicion
         switch (pos = getArguments().getInt("position")){
             case 0:
                 //Mostrar solicitudes activas hechas por el usuario
                 Query query = mRef.orderByChild("idCliente").equalTo(Const.gAuthData.getUid());
-
-
+                datos.add(u1);
 
                 break;
             case 2:
-                //Mostrar historial expertos
-                Usuario u1 = new Usuario("test1", "test1", "", "", "", "");
-                Usuario u2 = new Usuario("test2", "test2", "", "", "", "");
-                Usuario u3 = new Usuario("test3", "test3", "", "", "", "");
-
-                datos = new ArrayList<>();
                 datos.add(u1);
                 datos.add(u2);
                 datos.add(u3);
                 break;
             case 3:
                 //Mostrar historial solicitudes
+                datos.add(u2);
+                datos.add(u3);
                 break;
         }
 
@@ -98,8 +99,13 @@ public class CardViewListFragment extends Fragment {
             adapter.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    //Iniciar actividad de detalle del experto/solicitud
-                    startActivity(new Intent(getActivity().getApplicationContext(), DetalleActivity.class));
+                    //Iniciar actividad de detalle del chat/experto/solicitud
+                    if (pos == 0){
+                        startActivity(new Intent(getActivity().getApplicationContext(), ChatActivity.class));
+                    }else{
+                        startActivity(new Intent(getActivity().getApplicationContext(), DetalleActivity.class));
+                    }
+
                 }
             });
 
@@ -112,7 +118,7 @@ public class CardViewListFragment extends Fragment {
 
         }else {
 
-            TextView lblEmptyList = (TextView)view.findViewById(R.id.lblEmptyText);
+            TextView lblEmptyList = (TextView) view.findViewById(R.id.lblEmptyText);
             lblEmptyList.setVisibility(View.VISIBLE);
 
         }

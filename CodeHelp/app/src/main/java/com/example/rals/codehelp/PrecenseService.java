@@ -60,6 +60,7 @@ public class PrecenseService extends IntentService {
 
             }else if (ACTION_INICIAR_CHAT.equals(action)){
 
+                //TODO: Atender servicio para el chat
 
 
             }
@@ -70,7 +71,7 @@ public class PrecenseService extends IntentService {
     private void handleActionTimeOut() {
 
         //Cambiamos el estado de la solicitud..
-        Firebase mRef =Const.ref.child("solicitudes").child(idSolicitud);
+        Firebase mRef = Const.ref.child("solicitudes").child(idSolicitud);
         Map<String, Object> m = new HashMap<>();
         m.put("abierta", false);
         mRef.updateChildren(m);

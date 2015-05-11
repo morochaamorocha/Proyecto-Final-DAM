@@ -13,17 +13,17 @@ public class Mensaje {
     private String idChat;
     private String idUsuario;
     private String texto;
-    private Timestamp fecha;
+
 
     public Mensaje() {
     }
 
-    public Mensaje(String idMensaje, String idChat, String idUsuario, String texto, Timestamp fecha) {
+    public Mensaje(String idMensaje, String idChat, String idUsuario, String texto) {
         this.idMensaje = idMensaje;
         this.idChat = idChat;
         this.idUsuario = idUsuario;
         this.texto = texto;
-        this.fecha = fecha;
+
     }
 
     public String getIdMensaje() {
@@ -58,11 +58,4 @@ public class Mensaje {
         this.texto = texto;
     }
 
-    public Timestamp getFecha() {
-        return fecha;
-    }
-
-    public void setFecha(Timestamp fecha) {
-        this.fecha = fecha;
-    }
 }

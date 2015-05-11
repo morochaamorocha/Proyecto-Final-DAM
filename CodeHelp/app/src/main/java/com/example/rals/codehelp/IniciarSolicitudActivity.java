@@ -72,9 +72,6 @@ public class IniciarSolicitudActivity extends Activity implements AdapterView.On
                     }
                 });
 
-
-
-
             }
         });
 
